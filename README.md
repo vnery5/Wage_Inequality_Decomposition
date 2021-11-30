@@ -9,3 +9,9 @@ Contudo, os microdados referentes aos 1º trimestres da PNADC de 2012, 2015, 202
 
 O arquivo .R principal é o "Analise_PNADC.R", que contém as principais manipulações, análises descritivas e regressões.
 Além disso, ele gera o .dta usado nas decomposições empregadas em "RIF-Hora_Oaxaca_Decom.do", cujos resultados, por sua vez, são editados e organizados no Excel por VBA e grafados no "Graficos_OaxacaRIF.R".
+
+----
+Reponderações feitas pelo IBGE:
+
+- https://agenciadenoticias.ibge.gov.br/media/com_mediaibge/arquivos/2a5121f2c185216de059827d000e8076.pdf
+- https://agenciadenoticias.ibge.gov.br/media/com_mediaibge/arquivos/e12350e46c4b95a38176d9e5356618f4.pdf
