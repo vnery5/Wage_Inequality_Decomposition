@@ -23,7 +23,7 @@ cat("\014")
 
 ## mudando o diretório (caso seja necessário)
 getwd()
-setwd("/Users/vinicius/Desktop/Artigos/PET/Artigo_PNADC_RIF")
+setwd("/Users/vinicius/Desktop/Artigos/PET/Artigo_PNADC_RIF/Planilhas Decomposição e Gini")
 
 ## Percentis ####
 

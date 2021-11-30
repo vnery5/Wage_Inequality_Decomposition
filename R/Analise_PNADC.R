@@ -31,7 +31,6 @@ cat("\014")
 ## mudando o diretório (caso seja necessário)
 getwd()
 setwd("/Users/vinicius/Desktop/Artigos/PET/Artigo_PNADC_RIF/PNADC")
-# setwd("/Users/vinicius/Desktop/Artigo_PNAD")
 
 t1 <- Sys.time()
 
@@ -44,27 +43,41 @@ vars <- c("Ano","Trimestre","UF","UPA","Estrato","V1027","V1028","V1029","posest
           "VD4005","VD4008","VD4009","VD4010","VD4016","VD4017","VD4019",
           "VD4020","VD4031","VD4035","VD4036","VD4037")
 
-## lendo os dados
+## Lendo os dados
 # Anos específicos (2012, 2015, 2020, 2021)
 # Fonte: https://www.ibge.gov.br/estatisticas/sociais/trabalho/17270-pnad-continua.html?=&t=downloads
-nums <- c(2,3,4)
-data <- c("PNADC_012012.txt","PNADC_012015.txt","PNADC_012020.txt","PNADC_012021.txt")
+nums <- c(2, 3, 4)
+data_compressed <- c("PNADC_012012_20211130.zip","PNADC_012015_20211130.zip",
+                     "PNADC_012020_20211130.zip","PNADC_012021_20211130.zip")
 
+data <- c("PNADC_012012.txt","PNADC_012015.txt",
+          "PNADC_012020.txt","PNADC_012021.txt")
+
+# Função para ler e concantenar múltiplos anos
 ler_pnad <- function(){
   print(1)
-  df1 <- read_pnadc(microdata = data[1], input = "input_PNADC_trimestral.txt", vars = vars)
+  df1 <- read_pnadc(microdata = data[1], 
+                    input = "input_PNADC_trimestral.txt", vars = vars)
   for (i in nums){
-    ## lendo os dados
+    ## Lendo os dados
     print(i)
-    df2 <- read_pnadc(microdata = data[i], input = "input_PNADC_trimestral.txt", vars = vars)
-    # unindo vários dfs
+    df2 <- read_pnadc(microdata = data[i], 
+                      input = "input_PNADC_trimestral.txt", vars = vars)
+    # Unindo os dfs
     print("Unindo...")
     df1 <- rbind(df1,df2)
   }
   return(df1)
 }
 
+## Lendo os dados
 df <- ler_pnad()
+
+# Alternativamente (com uma boa internet), 
+# df <- get_pnadc(year = 2019, interview = 1, vars = vars)
+
+## Modificando o diretório de volta
+setwd("/Users/vinicius/Desktop/Artigos/PET/Artigo_PNADC_RIF")
 
 ## Identificação dos indivíduos/domicílios
 ## UPA: unidade primária de amostragem; V1008: número do domicílio; 
@@ -84,8 +97,6 @@ df$idind <- as.double(paste(df$UPA, df$V1008, df$V1014, df$V2003, sep = ""))
 df$Trimestre <- as.integer(df$Trimestre)
 df$Ano <- as.integer(df$Ano)
 df$data <- as.integer(df$Trimestre*10000 + df$Ano)
-
-# Alternativamente (com uma boa internet), df <- get_pnadc(year = 2019, interview = 1, vars = vars2019)
 
 ## 2021 (e principalmente 2021) tem um número bem menor de observações
 ## e uma "taxa de participação" bem menor (2021: < 40%);
@@ -122,7 +133,7 @@ df$educ3 <- as.integer(df$educ**3)
 df$educ4 <- as.integer(df$educ**4)
 
 ## deflacionando (usando o CO1 para termos reais do último ano (2021))
-df <- pnadc_deflator(df, "deflator_PNADC_2021_trimestral_010203.xls")
+df <- pnadc_deflator(df, "deflator_PNADC_2021_trimestral_070809.xls")
 # deflacionando rendimentos habituais
 df$VD4019 <- df$VD4019*df$Habitual
 # deflacionando rendimentos efetivos
@@ -426,7 +437,8 @@ T1
 
 # Lembrando: os pesos são pós-estratificados (V1028) e a probabilidade de
 # uma pessoa de uma pessoa na amostra é Prob  = 1 / Peso
-select(df, pesos, V1028)
+df$prob <- 1 / df$pesos
+select(df, pesos, V1028, prob)
 
 #### Curvas de Lorenz ####
 quantis <- c(seq(0,.01,.001), seq(.01,0.09,0.01), seq(0.1,0.9,0.1), seq(0.91,.99,0.01), seq(.991,1, 0.001))

@@ -13,8 +13,7 @@ library(reshape2)
 
 ## mudando o diretório (caso seja necessário)
 getwd()
-setwd("/Users/vinicius/Desktop/Artigo_PNAD")
-#setwd("/Users/vinicius/Desktop/Artigos/PET/Artigo_PNAD")
+setwd("/Users/vinicius/Desktop/Artigos/PET/Artigo_PNADC_RIF/PNADC")
 
 #para apagar todas as variáveis
 rm(list = ls())

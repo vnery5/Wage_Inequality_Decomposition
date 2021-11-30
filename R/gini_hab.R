@@ -13,8 +13,7 @@ library(reshape2)
 
 ## mudando o diretório (caso seja necessário)
 getwd()
-setwd("/Users/vinicius/Desktop/Artigo_PNAD")
-#setwd("/Users/vinicius/Desktop/Artigos/PET/Artigo_PNAD")
+setwd("/Users/vinicius/Desktop/Artigos/PET/Artigo_PNADC_RIF/PNADC")
 
 #para apagar todas as variáveis
 rm(list = ls())
@@ -352,6 +351,17 @@ gini <- merge(gini, ci_u.gini, by = c("Ano","variable"))
 names(gini) <- c("Ano","variable","value","ci.l","ci.u")
 gini
 
+#### Exportando para Excel ####
+write.xlsx(gini, file = "estatisticas_rendas_ginis.xlsx", 
+           sheetName = "gini_hab", col.names = T, row.names = F, append = T)
+
+write.xlsx(renda, file = "estatisticas_rendas_ginis.xlsx", 
+           sheetName = "renda_hab", col.names = T, row.names = F, append = T)
+
+write.xlsx(renda.pc, file = "estatisticas_rendas_ginis.xlsx", 
+           sheetName = "renda_pc_hab", col.names = T, row.names = F, append = T)
+
+
 #### Gráficos! ####
 ### gini
 ## em ambos os casos, 2015 é o ponto mínimo
@@ -461,15 +471,6 @@ grafico.renda.pc <- renda.pc %>%
 grafico.renda.pc
 ggsave("renda_media_mediana_pc.pdf", dpi = 1200)
 
-#### Exportando para Excel ####
-write.xlsx(gini, file = "estatisticas_rendas_ginis.xlsx", 
-           sheetName = "gini_hab", col.names = T, row.names = F, append = T)
-
-write.xlsx(renda, file = "estatisticas_rendas_ginis.xlsx", 
-           sheetName = "renda_hab", col.names = T, row.names = F, append = T)
-
-write.xlsx(renda.pc, file = "estatisticas_rendas_ginis.xlsx", 
-           sheetName = "renda_pc_hab", col.names = T, row.names = F, append = T)
 
 #### Renda desagregada por cor e gênero! ####
 
