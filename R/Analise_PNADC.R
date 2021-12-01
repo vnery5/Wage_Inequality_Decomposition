@@ -2,7 +2,7 @@
 ## e regressões com pesos amostrais. Além disso, exporta um .dta que servirá de base
 ## para as análises RIF feitas no STATA.
 
-################## Pacotes e Diretório ####
+#### Pacotes e Diretório ####
 library(survey) # uso e modelos de dados de pesquisas amostrais (com pesos pós-estratificados e correção de variância)
 library(convey)
 library(PNADcIBGE) # leitura de dados da PNADC
@@ -28,15 +28,15 @@ dev.off()
 # Clear console
 cat("\014")
 
-## mudando o diretório (caso seja necessário)
+## Mudando o diretório (caso seja necessário)
 getwd()
 setwd("/Users/vinicius/Desktop/Artigos/PET/Artigo_PNADC_RIF/PNADC")
 
 t1 <- Sys.time()
 
-################## Leitura dos Dados ##############
+#### Leitura dos Dados ##############
 
-# variáveis a serem lidas
+# Variáveis a serem lidas
 vars <- c("Ano","Trimestre","UF","UPA","Estrato","V1027","V1028","V1029","posest",
           "V1008","V1014","V1022","V2001","V2003","V2005","V2007","V2009","V2010",
           "VD2002","VD2003","VD3004","VD3005","VD3006","VD4001","VD4002","VD4003",
@@ -79,11 +79,16 @@ df <- ler_pnad()
 ## Modificando o diretório de volta
 setwd("/Users/vinicius/Desktop/Artigos/PET/Artigo_PNADC_RIF")
 
-## Identificação dos indivíduos/domicílios
-## UPA: unidade primária de amostragem; V1008: número do domicílio; 
+#### Identificação dos indivíduos/domicílios ####
+## UPA: unidade primária de amostragem (contém 14 domicílios); V1008: número do domicílio; 
 ## V1014: painel; V2003: ordenação das pessoas no domicílio
 
-# Salvando memória
+# OBS: como dito no webinar do Rafael Osorio (pynad), o número de ordem das pessoas
+# pode mudar, sendo possível, preferencialmente, usar dia, mês e ano de nascimento.
+# Contudo, há pessoas que não declaram sua data de aniversário, o que se torna um problema.
+# Além disso, há problemas com mudança na condição de domicílio, o que altera V2003 e V2005
+
+# Economizando memória
 df$UPA <- as.integer(df$UPA)
 df$V1008 <- as.integer(df$V1008)
 df$V1014 <- as.integer(df$V1014)
@@ -93,7 +98,7 @@ df$V2003 <- as.integer(df$V2003)
 df$iddom <- as.double(paste(df$UPA, df$V1008, df$V1014, sep = ""))
 df$idind <- as.double(paste(df$UPA, df$V1008, df$V1014, df$V2003, sep = ""))
 
-# criando coluna de data
+# Criando coluna de data
 df$Trimestre <- as.integer(df$Trimestre)
 df$Ano <- as.integer(df$Ano)
 df$data <- as.integer(df$Trimestre*10000 + df$Ano)
@@ -117,7 +122,7 @@ table(df$Ano[df$V2009 >= 15 & df$V2009 < 65 & !is.na(df$VD4019)])/table(df$Ano[d
 # não esquecer de mencionar a menor taxa de participação em virtude da pandemia!
 table(df$Ano[df$V2009 >= 15 & df$V2009 < 65 & df$VD4002 == 2])/table(df$Ano[df$V2009 >= 15 & df$V2009 < 65 & df$VD4001 == 1])
 
-################## Manipulações Gerais ##############
+#### Manipulações Gerais ##############
 # para acessar várias colunas
 select(df, iddom, idind)
 
@@ -212,7 +217,7 @@ df$exper2 <- as.integer(df$exper**2)
 df$exper3 <- as.integer(df$exper**3)
 df$exper4 <- as.integer(df$exper**4)
 
-#### Variáveis Categóricas ####
+###### Variáveis Categóricas ####
 
 ## criando a dummy de casado
 # criando uma coluna "atrasada"
@@ -1666,7 +1671,7 @@ categ
 ## union
 medias <- rbind(medias, categ)
 
-#### MÉDIAS POR ANO ####
+###### MÉDIAS POR ANO ####
 
 # Renda média aumentou principalmente entre 2012 e 2015, mas estagnou desde então
 # Força de Trabalho cada vez mais escolarizada (sendo que a média chega perto do ensino médio em 2021,
@@ -1757,7 +1762,7 @@ stargazer(ols2012.setor, ols2015.setor, ols2020.setor, ols2020.setor.efet, ols20
           decimal.mark = ",", digit.separator = ".",
           align = T, no.space = T, column.sep.width = "2pt")
 
-#### Retorno da educação e da experiência ao longo dos anos ####
+###### Retorno da educação e da experiência ao longo dos anos ####
 r.setor <- rbind(ols2012.setor$coefficients[2:9], 
                 ols2015.setor$coefficients[2:9], 
                 ols2020.setor$coefficients[2:9], 
@@ -1873,7 +1878,7 @@ stargazer(mod2012.setor, mod2015.setor, mod2020.setor, mod2021.setor,
           decimal.mark = ",", digit.separator = ".",
           align = T, no.space = T)
 
-################## Decomposições (RIFs FFL/Oaxaca) ###################
+#### Decomposições (RIFs FFL/Oaxaca) ###################
 ### Aqui, usaremos RIF e, para a decomposição, usaremos o pacote oaxaca
 ### Como uma regressão RIF é apenas uma OLS de X sobre RIF, podemos encontrar as
 ### decomposições (para a AMOSTRA) usando a RIF como variável dependente na funçào
