@@ -15,3 +15,7 @@ Reponderações feitas pelo IBGE:
 
 - https://agenciadenoticias.ibge.gov.br/media/com_mediaibge/arquivos/2a5121f2c185216de059827d000e8076.pdf
 - https://agenciadenoticias.ibge.gov.br/media/com_mediaibge/arquivos/e12350e46c4b95a38176d9e5356618f4.pdf
+
+----
+
+- Conferência IEA-WIDER (até 15/02/2022): http://www.iea-world.org/iea-wider-joint-panels-at-the-2022-wider-development-conference-in-partnership-with-uniandes/
