@@ -15,8 +15,7 @@ cat("\014")
 
 ## mudando o diretório (caso seja necessário)
 getwd()
-setwd("/Users/vinicius/Desktop/Artigos/PET/Artigo_PNAD")
-# setwd("/Users/vinicius/Desktop/Artigo_PNAD")
+setwd("/Users/vinicius/Desktop/Artigos/PET/Artigo_PNADC_RIF/Planilhas Decomposição e Gini")
 
 #### FUNÇÃO DOS GRÁFICOS ####
 
@@ -72,9 +71,7 @@ gini %>%
   ) +
   geom_line(aes(y = value, colour = variable), size = 1) +
   geom_ribbon(aes(ymin = ci.l, ymax = ci.u, fill = variable), alpha = 0.3, show.legend = F) +
-  scale_colour_manual(name = "",
-                      labels = c('Renda do Trabalho',"RTDPC"),
-                      values = c("black","gray40")) + 
+  scale_colour_manual(name = "", labels = c("RTDPC", 'Renda do Trabalho'), values = c("black","gray40")) + 
   scale_fill_manual(values=c("black","gray40")) + 
   labs(x = 'Ano', y = 'Gini') +
   scale_x_continuous(breaks = seq(12,21, by = 1)) +
@@ -129,9 +126,7 @@ renda %>%
   ) +
   geom_line(aes(y = value, colour = variable), size = 1) +
   geom_ribbon(aes(ymin = ci.l, ymax = ci.u, fill = variable), alpha = 0.3, show.legend = F) +
-  scale_colour_manual(name = "",
-                      labels = c('Média',"Mediana"),
-                      values = c("black","gray40")) + 
+  scale_colour_manual(name = "", labels = c('Média',"Mediana"), values = c("black","gray40")) + 
   scale_fill_manual(values=c("black","gray40")) + 
   labs(x = 'Ano', y = 'Renda do Trabalho (R$ 2021)') +
   scale_x_continuous(breaks = seq(12,21, by = 1)) +
