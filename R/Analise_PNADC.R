@@ -52,6 +52,8 @@ data_compressed <- c("PNADC_012012_20211130.zip","PNADC_012015_20211130.zip",
 
 data <- c("PNADC_012012.txt","PNADC_012015.txt",
           "PNADC_012020.txt","PNADC_012021.txt")
+data.csv <- c("PNADC_012012.csv","PNADC_012015.csv",
+          "PNADC_012020.csv","PNADC_012021.csv")
 
 # Função para ler e concantenar múltiplos anos
 ler_pnad <- function(){
@@ -70,8 +72,24 @@ ler_pnad <- function(){
   return(df1)
 }
 
+## Versão com csvs
+ler_pnad_csv <- function(){
+  print(1)
+  df1 <- read.csv(data.csv[1])
+  for (i in nums){
+    ## Lendo os dados
+    print(i)
+    df2 <- read.csv(data.csv[i])
+    # Unindo os dfs
+    print("Unindo...")
+    df1 <- rbind(df1,df2)
+  }
+  return(df1)
+}
+
 ## Lendo os dados
-df <- ler_pnad()
+#df <- ler_pnad()
+df <- ler_pnad_csv()
 
 # Alternativamente (com uma boa internet), 
 # df <- get_pnadc(year = 2019, interview = 1, vars = vars)
