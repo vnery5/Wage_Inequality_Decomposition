@@ -12,20 +12,20 @@ library(ggpubr)
 library(ggdist)
 library(reshape2)
 library(psych) # describe (instead of summary)
-library(oaxaca) #oaxaca-blinder 
+library(oaxaca) # oaxaca-blinder 
 library(dineq) # regressões RIF
 library(DescTools) # weighted gini
-library(foreign) # exporting to dta
-library(stargazer) # for tables
+library(foreign) # exporting to and reading .dta files
+library(stargazer) # for cute tables
 library(sandwich) # for robust SEs
 library(performance)
 library(reldist)
 
-#para apagar todas as variáveis
+# Para apagar todas as variáveis
 rm(list = ls())
-# Clear plots
+# Limpar gráficos
 dev.off()
-# Clear console
+# Limpar console
 cat("\014")
 
 ## Mudando o diretório (caso seja necessário)
@@ -49,11 +49,10 @@ vars <- c("Ano","Trimestre","UF","UPA","Estrato","V1027","V1028","V1029","posest
 nums <- c(2, 3, 4)
 data_compressed <- c("PNADC_012012_20211130.zip","PNADC_012015_20211130.zip",
                      "PNADC_012020_20211130.zip","PNADC_012021_20211130.zip")
-
 data <- c("PNADC_012012.txt","PNADC_012015.txt",
           "PNADC_012020.txt","PNADC_012021.txt")
 data.csv <- c("PNADC_012012.csv","PNADC_012015.csv",
-          "PNADC_012020.csv","PNADC_012021.csv")
+              "PNADC_012020.csv","PNADC_012021.csv")
 
 # Função para ler e concantenar múltiplos anos
 ler_pnad <- function(){
@@ -88,8 +87,8 @@ ler_pnad_csv <- function(){
 }
 
 ## Lendo os dados
-#df <- ler_pnad()
-df <- ler_pnad_csv()
+df <- ler_pnad()
+#df <- ler_pnad_csv()
 
 # Alternativamente (com uma boa internet), 
 # df <- get_pnadc(year = 2019, interview = 1, vars = vars)
@@ -406,31 +405,36 @@ df$VD4003 <- factor(df$VD4003)
 
 #### Data para Objeto Survey e para o Stata ####
 
-## selecionado apenas as colunas que vamos usar
+## Selecionado apenas as colunas que vamos usar
 uteis <- c('Ano','UPA','Estrato','posest','idade','V1027','V1028','V1029','sexo',
            'cor','cor2','sal.hab','sal.hab.hora','lsal','lsalh','renda.hab.dom.pc',
            'V2005','VD4001','VD4002','VD4003','setor','setor.simp','pos.ocupacao',
            'formalidade','grau.educ','regiao','rural','chefe.dom', 'casado',
            'num.filhos','num.filhos05','idind','iddom', 'VD4031', 'VD4035',
            'sal.efet','sal.efet.hora','lsal.efet','lsalh.efet',
-           'educ','educ2','educ3','educ4','exper','exper2','exper3','exper4'
-           )
-df <- df[,uteis]
+           'educ','educ2','educ3','educ4','exper','exper2','exper3','exper4')
 
-## mudando alguns nomes e reordenando
+## Restringindo as colunas
+df <- df[, uteis]
+
+## Ordenando por ano
 df <- arrange(df, Ano)
+
+## Alterando alguns nomes
 names(df)[names(df) == 'cor'] <- 'Cor'
 names(df)[names(df) == 'cor2'] <- 'Cor2'
 names(df)[names(df) == 'sexo'] <- 'Sexo'
 df$Cor.Sexo <- paste(df$Cor, df$Sexo, sep = ".")
 df$Cor2.Sexo <- paste(df$Cor2, df$Sexo, sep = ".")
 
-## identificando os anos na UPA, posest e Estrato
-df$posest <- as.character(paste(df$Ano,df$posest, sep = ""))
-df$UPA <- as.character(paste(df$Ano,df$UPA, sep = ""))
-df$Estrato <- as.character(paste(df$Ano,df$Estrato, sep = ""))
+## Identificando os anos na UPA, posest e Estrato 
+# Fazemos isso para permitir correto desenho amostral quando usamos dados de 
+# vários anos/trimestres
+df$posest <- as.character(paste(df$Ano, df$posest, sep=""))
+df$UPA <- as.character(paste(df$Ano, df$UPA, sep=""))
+df$Estrato <- as.character(paste(df$Ano, df$Estrato, sep=""))
 
-## criando o objeto
+## Criando o objeto survey e preparando-o para análises de desigualdade (se necessário)
 df.svy <- pnadc_design(df)
 # df.svy <- convey_prep(df.svy)
 
@@ -438,16 +442,19 @@ df.svy <- pnadc_design(df)
 # write.dta(df, "df_pnad_pet.dta")
 
 ## Restringindo a subpopulação de interesse usando o subset
-# o que isso faz: torna os pesos das observações não desejadas iguais a 0 (e as probs = inf),
+# Isso torna os pesos das observações não desejadas iguais a 0 (e as probs = inf),
 # o que permite calcular as variâncias corretamente (dropar é errado!)
 df.svy <- subset(df.svy, idade >= 15 & idade < 65 & !is.na(sal.hab) & !is.na(Cor))
 
-## droppando as observações do df original
-## usando o df apenas com as observações em idade ativa (15 a 64) e com renda do trabalho não-nula
-# de 1.947.690 obs, caimos para 756.540 e para 463.137 domicilios
-df <- df[df$idade >= 15 & df$idade < 65 & !is.na(df$sal.hab) & !is.na(df$Cor), ]
-length(unique(df$iddom))
+## Droppando as observações do df original (sem o desenho amostral)
+# Usando o df apenas com as observações em idade ativa (15 a 64) e com renda do 
+# trabalho não-nula; de 1.947.690 obs, caimos para 756.540 e para 463.137 domicilios
+df <- df[df$idade >= 15 & df$idade < 65 & 
+           !is.na(df$sal.hab) & 
+           !is.na(df$Cor), ]
 
+# Vendo estatísticas
+length(unique(df$iddom))
 table(df$Ano)
 summary(df[, c("sal.efet.hora","lsalh.efet")])
 
@@ -462,6 +469,12 @@ T1
 # uma pessoa de uma pessoa na amostra é Prob  = 1 / Peso
 df$prob <- 1 / df$pesos
 select(df, pesos, V1028, prob)
+
+# Mais informações sobre a reponderação da PNADC: 
+# https://guilhermejacob.github.io/2021/12/pnadc-raking-bootstrap/
+
+#### Lendo a base filtrada ####
+df <- read.dta("df_pnad_pet.dta")
 
 #### Curvas de Lorenz ####
 quantis <- c(seq(0,.01,.001), seq(.01,0.09,0.01), seq(0.1,0.9,0.1), seq(0.91,.99,0.01), seq(.991,1, 0.001))
