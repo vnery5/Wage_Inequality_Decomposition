@@ -41,7 +41,7 @@ percentis %<>%
 percentis$quantil <- as.integer(substring(percentis$quantil, 2))
 percentis$years <- gsub("_", "-", percentis$years)
 
-## colocando os anos como fatores
+## Colocando os anos como fatores
 percentis$years <- factor(percentis$years, 
                           levels = c('2012-2015','2015-2020','2012-2020','2020-2021'))
 
@@ -111,7 +111,7 @@ if (sheet == "R_2020_2021efet CI"){
 
 ## Plottando a decomposição detalhada
 
-## Fittando as Loess na mão (pra poder preencher)
+## Fittando as Loess na mão (pra poder preencher a área sombreada nos erros-padrão)
 perc.gg <- perc.gg %>% 
   group_by(label, effect, years) %>% 
   arrange(label, effect, years, quantil) %>%
@@ -241,7 +241,7 @@ ggsave('decomp_detalhada_CI_loess_quantis.pdf', dpi = 12000)
 ## Decomposição Geral
 # A diferença observada pode ser interpretada como a curva de incidência do crescimento
 
-## Fittando as Loess na mão (pra poder preencher)
+## Fittando as Loess na mão (pra poder preencher a área sombreada nos erros-padrão)
 perc.geral <- perc.geral %>% 
   group_by(label, years) %>% 
   arrange(label, years, quantil) %>%
@@ -252,8 +252,6 @@ perc.geral <- perc.geral %>%
          loess.upper = predict(loess(upper.ci ~ quantil, span = .2,),
                                data.frame(quantil = seq(min(quantil), max(quantil), 1))))
 
-Palette2 <- c("blue4", "green4", "red2")
-Palette2 <- wes_palette("Cavalcanti1")
 Palette2 <- wes_palette("Darjeeling1")
 
 perc.geral %>% 
@@ -272,7 +270,7 @@ perc.geral %>%
                "Estrutura do Mercado de Trabalho")
   ) + 
   scale_fill_manual(name = "", values = Palette2, guide = "none") +
-  scale_x_continuous(breaks = seq(0,10, by = 1)) +
+  scale_x_continuous(breaks = seq(0, 10, by=1)) +
   scale_y_continuous(labels=function(x) format(x, big.mark = ".", 
                                                decimal.mark = ",", 
                                                scientific = FALSE)) +
@@ -340,20 +338,20 @@ media.gini[media.gini$estatistica == "media", ] %>%
   # valores positivos maiores que 0.01
   geom_text(
     data = media.gini[media.gini$estatistica == "media" & media.gini$values >= .01, ],
-    mapping = aes(label = format(round(values,2), decimal.mark = ",")), 
+    mapping = aes(label = format(round(values, 2), decimal.mark = ",")), 
     nudge_y = 0.02, size = 2
   ) +
   # valores negativos menores que -0.01
   geom_text(
     data = media.gini[media.gini$estatistica == "media" & media.gini$values <= -.01, ],
-    mapping = aes(label = format(round(values,2), decimal.mark = ",")), 
+    mapping = aes(label = format(round(values, 2), decimal.mark = ",")), 
     nudge_y = -0.02, size = 2
   ) +
   labs(x = 'Variáveis', y = 'Impacto na Diferença dos Logs(Salário/Hora)') +
   scale_fill_manual(name = "", values = Palette) +
   scale_y_continuous(
     breaks = seq(-0.15,0.15, by = 0.05),
-    labels=function(x) format(round(x,2), big.mark = ".", decimal.mark = ",", scientific = F)
+    labels=function(x) format(round(x, 2), big.mark = ".", decimal.mark = ",", scientific = F)
   ) +
   theme_bw() + 
   theme(
@@ -366,7 +364,7 @@ media.gini[media.gini$estatistica == "media", ] %>%
   ) + 
   guides(fill = guide_legend(nrow = 1)) + 
   facet_grid(rows = vars(effect), cols = vars(years), switch = "y")
-ggsave("decomp_medias.pdf", dpi = 24000)
+ggsave("decomp_medias.pdf", dpi=2400)
 
 ## Plottando o Gini
 media.gini[media.gini$estatistica == "gini", ] %>% 
@@ -402,4 +400,4 @@ media.gini[media.gini$estatistica == "gini", ] %>%
   ) + 
   guides(fill = guide_legend(nrow = 1)) + 
   facet_grid(rows = vars(effect), cols = vars(years), switch = "y")
-ggsave("decomp_gini.pdf", dpi = 24000)
+ggsave("decomp_gini.pdf", dpi=2400)
