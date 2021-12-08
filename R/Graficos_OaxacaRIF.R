@@ -33,6 +33,9 @@ sheet <- "R_2020_2021efet CI" # ou R_2020_2021hab para 2020-21 habituais
 percentis <- read.xlsx(file = file, 
                        sheetName = sheet, as.data.frame = TRUE)
 
+## Mudando o diretório de volta
+setwd("/Users/vinicius/Desktop/Artigos/PET/Artigo_PNADC_RIF")
+
 ## Pivotando
 percentis %<>% 
   pivot_longer(!c(label, effect, years), names_to = "quantil", values_to = 'values')

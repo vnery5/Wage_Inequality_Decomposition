@@ -474,7 +474,9 @@ select(df, pesos, V1028, prob)
 # https://guilhermejacob.github.io/2021/12/pnadc-raking-bootstrap/
 
 #### Lendo a base filtrada ####
+setwd("/Users/vinicius/Desktop/Artigos/PET/Artigo_PNADC_RIF/PNADC")
 df <- read.dta("df_pnad_pet.dta")
+setwd("/Users/vinicius/Desktop/Artigos/PET/Artigo_PNADC_RIF")
 
 #### Curvas de Lorenz ####
 quantis <- c(seq(0,.01,.001), seq(.01,0.09,0.01), seq(0.1,0.9,0.1), seq(0.91,.99,0.01), seq(.991,1, 0.001))

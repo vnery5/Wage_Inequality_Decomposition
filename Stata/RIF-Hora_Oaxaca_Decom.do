@@ -11,7 +11,7 @@ set more off
 set dp comma
 
 * Mudando o diretório e lendo os dados
-cd "/Users/vinicius/Desktop/Artigos/PET/Artigo_PNADC_RIF"
+cd "/Users/vinicius/Desktop/Artigos/PET/Artigo_PNADC_RIF/PNADC"
 use df_pnad_pet
 
 **** Modificando o dataset
