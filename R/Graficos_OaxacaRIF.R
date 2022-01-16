@@ -12,7 +12,8 @@ library(magrittr)
 library(xlsx)
 library(data.table)
 library(stringr)
-library(wesanderson)
+library(wesanderson)  # https://github.com/karthik/wesanderson
+library(MetBrewer)  # https://github.com/BlakeRMills/MetBrewer/tree/main
 
 #para apagar todas as variáveis
 rm(list = ls())
