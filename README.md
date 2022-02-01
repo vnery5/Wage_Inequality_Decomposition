@@ -18,3 +18,15 @@ Contudo, em 30 de novembro de 2021, o IBGE realizou reponderações em seus peso
 
 - https://agenciadenoticias.ibge.gov.br/media/com_mediaibge/arquivos/2a5121f2c185216de059827d000e8076.pdf
 - https://agenciadenoticias.ibge.gov.br/media/com_mediaibge/arquivos/e12350e46c4b95a38176d9e5356618f4.pdf
+
+-----
+## Prints
+
+<p align="center">
+<img src="Figuras/Decomposições/decomp_geral_CI_loess_quantis.pdf" alt="Decomposição Geral" width="500"/>
+</p>
+
+<p align="center">
+<img src="Figuras/Decomposições/decomp_detalhada_CI_loess_quantis.pdf" alt="Decomposição Detalhada" width="500"/>
+</p>
+
