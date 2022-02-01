@@ -1,4 +1,4 @@
-# A nova década perdida e a pandemia: uma análise dos determinantes do recrudescimento da desigualdade no Brasil a partir de Regressões RIF
+# A nova década perdida e a pandemia: uma análise da distribuição de renda e do recrudescimento da desigualdade no Brasil a partir de Regressões RIF
 
 Repositório com os scripts, planilhas e figuras usados no artigo "A nova década perdida e a pandemia: uma análise dos determinantes do recrudescimento da desigualdade no Brasil a partir de Regressões RIF".
 
@@ -18,7 +18,3 @@ Contudo, em 30 de novembro de 2021, o IBGE realizou reponderações em seus peso
 
 - https://agenciadenoticias.ibge.gov.br/media/com_mediaibge/arquivos/2a5121f2c185216de059827d000e8076.pdf
 - https://agenciadenoticias.ibge.gov.br/media/com_mediaibge/arquivos/e12350e46c4b95a38176d9e5356618f4.pdf
-
-----
-
-- Conferência IEA-WIDER (até 15/02/2022): http://www.iea-world.org/iea-wider-joint-panels-at-the-2022-wider-development-conference-in-partnership-with-uniandes/
