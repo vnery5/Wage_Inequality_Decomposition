@@ -120,7 +120,7 @@ df$Trimestre <- as.integer(df$Trimestre)
 df$Ano <- as.integer(df$Ano)
 df$data <- as.integer(df$Trimestre*10000 + df$Ano)
 
-## 2021 (e principalmente 2021) tem um número bem menor de observações
+## 2021 tem um número bem menor de observações
 ## e uma "taxa de participação" bem menor (2021: < 40%);
 ## 2021 tem 320.000 observações e 120.000 que trabalham; muito menor que ambos
 ## 2021 tem tanto um número bem menor de observações quanto uma taxa de "participação" menor
@@ -128,7 +128,7 @@ table(df$Ano)
 table(df$Ano[!is.na(df$VD4019)])
 table(df$Ano[!is.na(df$VD4019)])/table(df$Ano)
 
-# considerando individuos entre 15 e 64 anos, a mesma análise é válida
+# Considerando individuos entre 15 e 64 anos, a mesma análise é válida
 # Das meras 115.235 observações em idade ativa, 52% trabalham
 # máximo: 2012 (224.633); mínimo: 2021 (115.235)
 table(df$Ano[df$V2009 >= 15 & df$V2009 < 65])
@@ -404,7 +404,7 @@ df$VD4003[df$VD4003 == 2] <- "fora.ft.fora.ft.potencial"
 df$VD4003 <- factor(df$VD4003)
 
 #### Data para Objeto Survey e para o Stata ####
-
+##### Seleção de Dados ####
 ## Selecionado apenas as colunas que vamos usar
 uteis <- c('Ano','UPA','Estrato','posest','idade','V1027','V1028','V1029','sexo',
            'cor','cor2','sal.hab','sal.hab.hora','lsal','lsalh','renda.hab.dom.pc',
@@ -427,6 +427,7 @@ names(df)[names(df) == 'sexo'] <- 'Sexo'
 df$Cor.Sexo <- paste(df$Cor, df$Sexo, sep = ".")
 df$Cor2.Sexo <- paste(df$Cor2, df$Sexo, sep = ".")
 
+##### Interação com os anos ####
 ## Identificando os anos na UPA, posest e Estrato 
 # Fazemos isso para permitir correto desenho amostral quando usamos dados de 
 # vários anos/trimestres
@@ -434,6 +435,7 @@ df$posest <- as.character(paste(df$Ano, df$posest, sep=""))
 df$UPA <- as.character(paste(df$Ano, df$UPA, sep=""))
 df$Estrato <- as.character(paste(df$Ano, df$Estrato, sep=""))
 
+##### Criando o objeto survey e exportando ####
 ## Criando o objeto survey e preparando-o para análises de desigualdade (se necessário)
 df.svy <- pnadc_design(df)
 # df.svy <- convey_prep(df.svy)
@@ -441,6 +443,7 @@ df.svy <- pnadc_design(df)
 ## Exportando para dta
 # write.dta(df, "df_pnad_pet.dta")
 
+##### Subsetting e Pesos ####
 ## Restringindo a subpopulação de interesse usando o subset
 # Isso torna os pesos das observações não desejadas iguais a 0 (e as probs = inf),
 # o que permite calcular as variâncias corretamente (dropar é errado!)
@@ -1704,7 +1707,7 @@ categ
 ## union
 medias <- rbind(medias, categ)
 
-###### MÉDIAS POR ANO ####
+###### Resultado das Médias por Ano ####
 
 # Renda média aumentou principalmente entre 2012 e 2015, mas estagnou desde então
 # Força de Trabalho cada vez mais escolarizada (sendo que a média chega perto do ensino médio em 2021,
