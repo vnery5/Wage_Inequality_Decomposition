@@ -538,7 +538,7 @@ quantis <- c(seq(0,.01,.001), seq(.01,0.09,0.01), seq(0.1,0.9,0.1), seq(0.91,.99
 #     legend.title = element_blank(),
 #     legend.background = element_rect(fill = NA)
 #   )
-# ggsave("lorenz1215.pdf", dpi = 1200)
+# ggsave("lorenz1215.pdf", dpi = 600)
 # 
 # ## excluindo os 0,1% mais pobres e mais ricos
 # pobre <- quantile(df$sal.hab, probs = c(.001), na.rm = FALSE, names = TRUE)
@@ -645,7 +645,7 @@ cor %>%
         axis.title = element_text(size = 12),
         axis.text = element_text(size = 11),
         legend.background = element_rect(fill = NA))
-ggsave("obs_cor.pdf", dpi = 1200)
+ggsave("obs_cor.pdf", dpi = 600)
 
 ## na população
 cor %>%
@@ -663,7 +663,7 @@ cor %>%
         axis.title = element_text(size = 12),
         axis.text = element_text(size = 11),
         legend.background = element_rect(fill = NA))
-ggsave("pop_cor.pdf", dpi = 1200)
+ggsave("pop_cor.pdf", dpi = 600)
 
 ## Distribuições de Renda
 # apenas o boxplot capped em 5.000
@@ -679,7 +679,7 @@ df[df$sal.hab <= 5000,] %>%
         axis.title = element_text(size = 12),
         axis.text = element_text(size = 11),
         legend.background = element_rect(fill = NA))
-ggsave("boxplot_renda5000_cor.pdf", dpi = 2400)
+ggsave("boxplot_renda5000_cor.pdf", dpi = 600)
 
 # Raincloud visualization
 df[df$sal.hab <= 5000,] %>%
@@ -705,7 +705,7 @@ df[df$sal.hab <= 5000,] %>%
         axis.text = element_text(size = 11),
         legend.background = element_rect(fill = NA)) + 
   coord_flip()
-ggsave("raincloud_renda5000_cor.pdf", dpi = 2400)
+ggsave("raincloud_renda5000_cor.pdf", dpi = 600)
 
 ## Distribuições de Educ
 # amarelos e brancos possuem distribuição superior; ppis similares entre si
@@ -722,7 +722,7 @@ df %>%
           axis.title = element_text(size = 12),
           axis.text = element_text(size = 11),
           legend.background = element_rect(fill = NA))
-ggsave('boxplots_educ_cor.pdf', dpi = 2400)
+ggsave('boxplots_educ_cor.pdf', dpi = 600)
 
 # Raincloud visualization
 df %>%
@@ -751,7 +751,7 @@ df %>%
         axis.text = element_text(size = 11),
         legend.background = element_rect(fill = NA)) + 
   coord_flip()
-ggsave("raincloud_educ_cor.pdf", dpi = 2400)
+ggsave("raincloud_educ_cor.pdf", dpi = 600)
 
 #### Cor e Grau de Educ ####
 ## Contagens
@@ -1260,7 +1260,7 @@ df[df$grau.educ != "Sem Instrução",] %>%
   xlim(-3,6) +
   theme_bw() +
   theme(plot.caption = element_text(hjust = 0))
-ggsave("dist_grau_educ.pdf", dpi = 1200)
+ggsave("dist_grau_educ.pdf", dpi = 600)
 
 # vendo estatísticas: superior completo possui o DOBRO do desvio padrão
 tapply(df$sal.hab,df$grau.educ, psych::describe)
@@ -1291,7 +1291,7 @@ df[df$grau.educ != "Sem Instrução",]  %>%
         axis.text = element_text(size = 11),
         legend.background = element_rect(fill = NA)) + 
   coord_flip()
-ggsave("raincloud_renda_grau_educ.pdf", dpi = 2400)
+ggsave("raincloud_renda_grau_educ.pdf", dpi = 600)
 
 #### Anos ####
 
@@ -1345,7 +1345,7 @@ ano %>%
     axis.title = element_text(size = 12),
     axis.text = element_text(size = 11),
     legend.background = element_rect(fill = NA))
-ggsave("pop_ano.pdf", dpi = 1200)
+ggsave("pop_ano.pdf", dpi = 600)
 
 ## Distribuições de Renda
 # distribuicao de 2020 e 2021 "igual", mas mediana deste ano caiu, indicando aumento da renda dos mais ricos
@@ -1420,7 +1420,7 @@ df %>%
         axis.text = element_text(size = 11),
         legend.background = element_rect(fill = NA)) + 
   coord_flip()
-ggsave("raincloud_educ_ano.pdf", dpi = 2400)
+ggsave("raincloud_educ_ano.pdf", dpi = 600)
 
 ## Distplot de Educação
 # 2020 e 2021 possuem uma força de trabalho mais educada
@@ -1441,7 +1441,7 @@ df %>%
         axis.title = element_text(size = 12),
         axis.text = element_text(size = 11),
         legend.text = element_text(size = 12))
-ggsave('distacum_educ_ano.pdf', dpi = 2400)
+ggsave('distacum_educ_ano.pdf', dpi = 600)
 
 ## Boxplots de exper
 # força de trabalho foi ficando ligeiramente mais experiente
@@ -1473,7 +1473,7 @@ df %>%
         axis.title = element_text(size = 12),
         axis.text = element_text(size = 11),
         legend.text = element_text(size = 12))
-ggsave('distacum_exper_ano.pdf', dpi = 2400)
+ggsave('distacum_exper_ano.pdf', dpi = 600)
 
 #### Ano e Grau de Educ ####
 ## Contagens
@@ -1508,7 +1508,7 @@ que declararam rendimento habitual positivo no momento da entrevista.") +
         legend.background = element_rect(fill = NA),
         plot.caption = element_text(hjust = 0))
 relative
-ggsave("obs_grau_educ_ano.pdf", dpi = 300)
+ggsave("obs_grau_educ_ano.pdf", dpi = 600)
 
 ## equivalentes populacionais
 relative <- agrup %>%
@@ -1526,7 +1526,7 @@ inferida a partir dos pesos pós-estratificados disponíveis na pesquisa.") +
         legend.background = element_rect(fill = NA),
         plot.caption = element_text(hjust = 0))
 relative
-ggsave("pop_grau_educ_ano.pdf", dpi = 300)
+ggsave("pop_grau_educ_ano.pdf", dpi = 600)
 
 ## Renda
 # retornos não-lineares (curva exponencial)
@@ -1545,7 +1545,7 @@ agrup2 %>%
         legend.title = element_blank(),
         legend.background = element_rect(fill = NA),
         plot.caption = element_text(hjust = 0))
-ggsave("renda_ano_grau_educ.pdf", dpi = 300)
+ggsave("renda_ano_grau_educ.pdf", dpi = 600)
 
 #### Tabela de Médias por Ano ####
 ## Se precisar mudar a tabela para considerar apenas a amostra, rodar:
@@ -1854,7 +1854,7 @@ retornos %>%
     legend.text = element_text(size = 10),
     axis.title = element_text(size = 10)
   )
-ggsave("retornos_educ_exper_hora.pdf", dpi = 2400)
+ggsave("retornos_educ_exper_hora.pdf", dpi = 600)
 
 ## Plots separados
 
@@ -1874,7 +1874,7 @@ retornos[retornos$Variável == "Educação", ] %>%
     legend.text = element_text(size = 10),
     axis.title = element_text(size = 10)
   )
-ggsave("retornos_educ_hora.pdf", dpi = 2400)
+ggsave("retornos_educ_hora.pdf", dpi = 600)
 
 # Experiência
 retornos[retornos$Variável == "Experiência", ] %>% 
@@ -1892,7 +1892,7 @@ retornos[retornos$Variável == "Experiência", ] %>%
     legend.text = element_text(size = 10),
     axis.title = element_text(size = 10)
   )
-ggsave("retornos_exper_hora.pdf", dpi = 2400)
+ggsave("retornos_exper_hora.pdf", dpi = 600)
 
 #### Regressões (SVYGLMs) por ano ####
 ## modelos para 2012

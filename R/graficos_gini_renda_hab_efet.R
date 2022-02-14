@@ -86,7 +86,7 @@ gini %>%
     legend.background = element_rect(fill = NA)
   ) + 
   facet_grid(cols = vars(rendimento), scales = 'free_y', switch = 'y')
-ggsave("gini_hab_efet.pdf", dpi = 2400)
+ggsave("gini_hab_efet.pdf", dpi = 600)
 
 #### Renda Individual do Trabalho ####
 
@@ -141,7 +141,7 @@ renda %>%
     legend.background = element_rect(fill = NA)
   ) + 
   facet_grid(cols = vars(rendimento), scales = 'free_y', switch = 'y')
-ggsave("renda_hab_efet.pdf", dpi = 2400)
+ggsave("renda_hab_efet.pdf", dpi = 600)
 
 
 #### Renda do Trabalho Domiciliar per Capita ####
@@ -197,4 +197,4 @@ renda.pc %>%
     legend.background = element_rect(fill = NA)
   ) + 
   facet_grid(cols = vars(rendimento), scales = 'free_y', switch = 'y')
-ggsave("renda_hab_efet_pc.pdf", dpi = 2400)
+ggsave("renda_hab_efet_pc.pdf", dpi = 600)

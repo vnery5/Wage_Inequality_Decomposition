@@ -239,8 +239,8 @@ perc.gg %>%
   guides(color = guide_legend(nrow = 2)) + 
   facet_grid(rows = vars(effect), cols = vars(years),
              scales = 'free_y', switch = 'y')
-ggsave('decomp_detalhada_CI_loess_quantis.pdf', dpi = 12000)
-# ggsave('decomp_detalhada_CI_quantis.pdf', dpi = 6000)
+ggsave('decomp_detalhada_CI_loess_quantis.pdf', dpi = 600)
+# ggsave('decomp_detalhada_CI_quantis.pdf', dpi = 600)
 
 ## Decomposição Geral
 # A diferença observada pode ser interpretada como a curva de incidência do crescimento
@@ -291,8 +291,8 @@ perc.geral %>%
   guides(color = guide_legend(nrow = 1)) + 
   facet_grid(cols = vars(years))
 
-ggsave('decomp_geral_CI_loess_quantis.pdf', dpi = 12000)
-# ggsave('decomp_geral_CI_quantis.pdf', dpi = 6000)
+ggsave('decomp_geral_CI_loess_quantis.pdf', dpi = 600)
+# ggsave('decomp_geral_CI_quantis.pdf', dpi = 600)
 
 ## Decomposições Totais Gini e Renda Média ####
 
@@ -368,7 +368,7 @@ media.gini[media.gini$estatistica == "media", ] %>%
   ) + 
   guides(fill = guide_legend(nrow = 1)) + 
   facet_grid(rows = vars(effect), cols = vars(years), switch = "y")
-ggsave("decomp_medias.pdf", dpi=2400)
+ggsave("decomp_medias.pdf", dpi = 600)
 
 ## Plottando o Gini
 media.gini[media.gini$estatistica == "gini", ] %>% 
@@ -404,4 +404,4 @@ media.gini[media.gini$estatistica == "gini", ] %>%
   ) + 
   guides(fill = guide_legend(nrow = 1)) + 
   facet_grid(rows = vars(effect), cols = vars(years), switch = "y")
-ggsave("decomp_gini.pdf", dpi=2400)
+ggsave("decomp_gini.pdf", dpi = 600)
