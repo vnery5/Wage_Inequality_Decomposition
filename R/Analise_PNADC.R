@@ -21,11 +21,12 @@ library(sandwich) # for robust SEs
 library(performance)
 library(reldist)
 
-# Para apagar todas as variáveis
+## Comandos Úteis
+# Apagar Variáveis
 rm(list = ls())
-# Limpar gráficos
+# Apagar plots
 dev.off()
-# Limpar console
+# Limpar Console
 cat("\014")
 
 ## Mudando o diretório (caso seja necessário)

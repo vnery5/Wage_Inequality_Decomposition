@@ -15,11 +15,12 @@ library(stringr)
 library(wesanderson)  # https://github.com/karthik/wesanderson
 library(MetBrewer)  # https://github.com/BlakeRMills/MetBrewer/tree/main
 
-#para apagar todas as variáveis
+## Comandos Úteis
+# Apagar Variáveis
 rm(list = ls())
-# Clear plots
+# Apagar plots
 dev.off()
-# Clear console
+# Limpar Console
 cat("\014")
 
 ## mudando o diretório (caso seja necessário)
